@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}"
+    ],
+    "editor.wordWrap": "on",
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/43c82c93-2034-4c95-afe3-d93052372058/resourceGroups/appsvc_rg_linux_centralus/providers/Microsoft.Web/sites/NodeTypeScriptDemo3"
+}
