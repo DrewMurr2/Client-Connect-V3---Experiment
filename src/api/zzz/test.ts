@@ -2,5 +2,5 @@ import { Response, Request, Router } from "express";
 
 
 export let api = (req: Request, res: Response) => {
-    res.send('File hello world')
+    res.send('file test')
 }
