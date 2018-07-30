@@ -1,0 +1,21 @@
+{
+  "name": "auto-generate-apis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "node dist/index.js",
+    "build-ts": "tsc",
+    "test": "jest --forceExit --coverage --verbose ",
+    "watch-test": "npm run test -- --watchAll"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^23.4.2",
+    "ts-jest": "^23.0.1",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2"
+  }
+}
