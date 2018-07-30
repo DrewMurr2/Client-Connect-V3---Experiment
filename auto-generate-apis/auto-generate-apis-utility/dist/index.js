@@ -9,12 +9,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-class Someclass {
+const createAngularApiService_1 = require("./createAngularApiService");
+class Main {
     constructor() {
         this.fs = fs;
         this._convertArrayOfPathsToObject = (arrayOfPaths) => {
             let baseObj = {};
-            console.log('\n\narray of paths:\n\n', arrayOfPaths);
             arrayOfPaths.forEach(path => {
                 this.addApi(baseObj, path);
             });
@@ -47,13 +47,17 @@ class Someclass {
             return files;
         };
         this._remove_map_files = (all_files) => all_files.filter(a_file => a_file.split(".map").length === 1);
+        this._remove_ts_extensions = (file_paths) => file_paths.map(a_file_path => this._remove_ts_extension(a_file_path));
+        this._remove_ts_extension = (a_file) => a_file.replace('.ts', '');
     }
     autoGenerateApiUtitily(config) {
-        let { angularServiceTemplate, expressRouterTemplate, expressRoutePath, angularApiServicePath } = config;
-        angularServiceTemplate = this._pathToString(angularServiceTemplate);
-        expressRouterTemplate = this._pathToString(expressRouterTemplate);
-        const apis = this._retrieve_api_file_names(config);
-        const apiObject = this._convertArrayOfPathsToObject(apis);
+        let { angularServiceTemplatePath, expressRouterTemplatePath, expressRoutePath, angularApiServicePath } = config;
+        const angularServiceTemplate = this._pathToString(angularServiceTemplatePath);
+        const expressRouterTemplate = this._pathToString(expressRouterTemplatePath);
+        const apis_with_extensions = this._retrieve_api_file_names(config);
+        const apis_without_extensions = this._remove_ts_extensions(apis_with_extensions);
+        const apiObject = this._convertArrayOfPathsToObject(apis_without_extensions);
+        new createAngularApiService_1.CreateAngularService(angularServiceTemplate, config.angularApiServicePath, apiObject);
         return apiObject;
     }
     addApi(parentObj, path, fullpath) {
@@ -72,5 +76,5 @@ class Someclass {
         }
     }
 }
-exports.Someclass = Someclass;
+exports.Main = Main;
 //# sourceMappingURL=index.js.map

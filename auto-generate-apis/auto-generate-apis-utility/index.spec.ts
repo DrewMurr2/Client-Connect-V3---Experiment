@@ -1,27 +1,20 @@
-import { Someclass, Config } from './index'
+import { Main, MainConfig } from './index'
 
-describe('Someclass', () => {
+describe('Main', () => {
 
-    let aClass: Someclass
+    let main: Main
 
-    const testConfig: Config = {
-        angularServiceTemplate: './folder_for_testing/angular.service.template.ts',
-        expressRouterTemplate: './folder_for_testing/express.router.template.ts',
-        expressApiDirectory: './folder_for_testing/express_apis_for_testing',
-        expressRoutePath: './folder_for_testing/express.router.destination.ts',
-        angularApiServicePath: './folder_for_testing/angular.service.destination.ts'
-    }
 
     beforeEach(() => {
-        aClass = new Someclass()
+        main = new Main()
     })
 
 
     describe('pathToString', () => {
         it("shoudld be a string", done => {
-            let pathToString = aClass._pathToString
-            let contect = pathToString('../angularTemplate.ts')
-            expect(contect).toBe(current_content)
+            let pathToString = main._pathToString
+            let contect = pathToString(testConfig.angularServiceTemplatePath)
+            expect(contect).toBe(angularTemplateString)
             done()
         })
     })
@@ -30,67 +23,86 @@ describe('Someclass', () => {
 
     describe('autoGenerateApiUtitily', () => {
         it("should have the desired output", (done) => {
-            let result = aClass.autoGenerateApiUtitily(testConfig)
-expect(result).toEqual(expectedResultOfArrayOfPathsToObject)
+            let result = main.autoGenerateApiUtitily(testConfig)
+            expect(result).toEqual(testApiObj)
             done()
         })
     })
 
     describe('_recursivelyFindAllPathsInADirectory', () => {
         it("Should return string array", (done) => {
-            let filenames = aClass._recursivelyFindAllPathsInADirectory(testConfig.expressApiDirectory)
-            expect(filenames).toEqual([
-                "folder_for_testing/express_apis_for_testing/file_for_testing.ts", 
-                [
-                    "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder.ts", 
-                    "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder.ts"
-                ]
-                ])
-                done()
+            let filenames = main._recursivelyFindAllPathsInADirectory(testConfig.expressApiDirectory)
+            expect(filenames).toEqual(arrayOfArrayOfPaths)
+            done()
         })
     })
 
     describe('_retrieve_api_file_names', () => {
         it('shoud', (done) => {
-            let filenames = aClass._retrieve_api_file_names(testConfig)
+            let filenames = main._retrieve_api_file_names(testConfig)
             expect(filenames).toEqual(arrayOfPaths)
             done()
         })
     })
 
-
-    describe('_convertArrayOfPathsToObject', () => {
-        it('Should converty array of paths to object', (done) => {
-        let objResult = aClass._convertArrayOfPathsToObject(arrayOfPaths)
-        expect(objResult).toEqual(expectedResultOfArrayOfPathsToObject)
-        done()
+    describe('_remove_ts_extensions', () => {
+        it('should', (done) => {
+            let filenames_without_extensions = main._remove_ts_extensions(arrayOfPaths)
+            expect(filenames_without_extensions).toEqual(arrayOfPaths_without_extensions)
+            done()
         })
     })
 
+    describe('_convertArrayOfPathsToObject', () => {
+        it('Should converty array of paths to object', (done) => {
+            let objResult = main._convertArrayOfPathsToObject(arrayOfPaths_without_extensions)
+            expect(objResult).toEqual(testApiObj)
+            done()
+        })
+    })
+
+    const arrayOfArrayOfPaths = [
+        "folder_for_testing/express_apis_for_testing/file_for_testing.ts",
+        [
+            "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder.ts",
+            "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder.ts"
+        ]
+    ]
+
     const arrayOfPaths = [
-                "folder_for_testing/express_apis_for_testing/file_for_testing.ts", 
-                "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder.ts", 
-                "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder.ts"
-                ]
-                
-            const expectedResultOfArrayOfPathsToObject = {
-                    "folder_for_testing": 
-                    {"express_apis_for_testing":  
-                    {"file_for_testing.ts": "folder_for_testing/express_apis_for_testing/file_for_testing.ts",
-                    "subfolder_for_testing": 
-                    {"file_from_subfolder.ts": "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder.ts",
-                "another_file_from_subfolder.ts":  "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder.ts"          }
-                }
-            }}
+        "folder_for_testing/express_apis_for_testing/file_for_testing.ts",
+        "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder.ts",
+        "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder.ts"
+    ]
+
+    const arrayOfPaths_without_extensions = [
+        "folder_for_testing/express_apis_for_testing/file_for_testing",
+        "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder",
+        "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder"
+    ]
 })
+export const testConfig: MainConfig = {
+    angularServiceTemplatePath: './folder_for_testing/angular.service.template.ts',
+    expressRouterTemplatePath: './folder_for_testing/express.router.template.ts',
+    expressApiDirectory: './folder_for_testing/express_apis_for_testing',
+    expressRoutePath: './folder_for_testing/express.router.destination.ts',
+    angularApiServicePath: './folder_for_testing/angular.service.destination.ts'
+}
+export const testApiObj = {
+    "folder_for_testing":
+    {
+        "express_apis_for_testing":
+        {
+            "file_for_testing": "folder_for_testing/express_apis_for_testing/file_for_testing",
+            "subfolder_for_testing":
+            {
+                "file_from_subfolder": "folder_for_testing/express_apis_for_testing/subfolder_for_testing/file_from_subfolder",
+                "another_file_from_subfolder": "folder_for_testing/express_apis_for_testing/subfolder_for_testing/another_file_from_subfolder"
+            }
+        }
+    }
+}
 
-
-
-let current_content = `angular service
-
-
-
+export const angularTemplateString = `Beginning of Service
 { { } }
-
-
-End angular service`
+End of Service`
