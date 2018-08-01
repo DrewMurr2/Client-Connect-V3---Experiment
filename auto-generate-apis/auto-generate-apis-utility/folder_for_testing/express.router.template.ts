@@ -1,17 +1,3 @@
-Beginning of Router
-
-
-
+Beginning of Express Routes
 { { } }
-
-
-
-End of Router
-
-
-
-
-
-
-
-
+End of Express Routes

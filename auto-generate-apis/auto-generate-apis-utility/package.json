@@ -2,14 +2,15 @@
   "name": "auto-generate-apis-utility",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run serve",
     "serve": "node dist/index.js",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "test": "jest --forceExit --coverage --verbose ",
-    "watch-test": "npm run test -- --watchAll"
+    "watch-test": "npm run test -- --watchAll",
+    "show-jest-config": "jest --showConfig"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,11 @@
     "ts-jest": "^23.0.1",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2"
-  }
+  },
+  "watchPathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/folder_for_testing/",
+    "(.test)\\.(ts|tsx|js)$",
+    "/distribution/.*\\.(ts|js)$"
+  ]
 }

@@ -12,7 +12,13 @@ module.exports = {
         '^.+\\.(ts|tsx)$': './node_modules/ts-jest/preprocessor.js'
     },
     testMatch: [
-        '**/*.spec.(ts|js)'
+        '**/src/**/*.spec.(ts|js)'
     ],
-    testEnvironment: 'node'
+    testEnvironment: 'node',
+    "watchPathIgnorePatterns": [
+        "<rootDir>/node_modules/",
+        "<rootDir>/folder_for_testing/",
+        "(.test)\\.(ts|tsx|js)$",
+        "/distribution/.*\\.(ts|js)$"
+    ]
 };

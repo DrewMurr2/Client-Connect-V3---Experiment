@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run serve",
-    "serve": "node dist/index.js",
+    "serve": "node dist/src/index.js",
     "build-ts": "tsc",
     "test": "jest --forceExit --coverage --verbose ",
     "watch-test": "npm run test -- --watchAll"
